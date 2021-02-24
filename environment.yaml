@@ -1,0 +1,10 @@
+name: site-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - mako
+  - pyyaml
+  - pip
+  - pip:
+    - git+https://github.com/ooi-data/PyGithub.git@dev
