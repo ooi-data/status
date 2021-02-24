@@ -22,12 +22,23 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_PAT }}
+      - name: Prevent multiple jobs running in parallel
+        id: conversion_lock
+        uses: softprops/turnstyle@v1
+        with:
+          abort-after-seconds: 3
+          poll-interval-seconds: 2
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup python
         uses: actions/setup-python@v1
+        if: ${{ steps.conversion_lock.outcome == 'success' }}
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Cache conda
         uses: actions/cache@v2
+        if: ${{ steps.conversion_lock.outcome == 'success' }}
         env:
           # Increase this value to reset cache if environment.yaml has not changed
           CACHE_NUMBER: 0
@@ -36,6 +47,7 @@ jobs:
           key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('environment.yaml') }}
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
+        if: ${{ steps.conversion_lock.outcome == 'success' }}
         with:
           activate-environment: ${{ env.CONDA_ENV }}
           environment-file: environment.yaml
@@ -43,11 +55,13 @@ jobs:
           auto-activate-base: false
           use-only-tar-bz2: true
       - name: Print conda env
+        if: ${{ steps.conversion_lock.outcome == 'success' }}
         shell: bash -l {0}
         run: |
           conda info
           conda list
       - name: Run site update
+        if: ${{ steps.conversion_lock.outcome == 'success' }}
         shell: bash -l {0}
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
