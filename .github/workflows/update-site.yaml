@@ -2,8 +2,6 @@ name: Site update
 
 on:
   push:
-    paths:
-      - "src/"
     branches:
       - "main"
   schedule:
