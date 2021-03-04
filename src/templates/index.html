@@ -103,15 +103,15 @@
                                             rel="noopener noreferrer" href="${stream['request']['response']}">JSON</a>
                                     </td>
                                     % else:
-                                    <a class="btn btn-primary" target="_blank" role="button" rel="noopener noreferrer"
-                                        href="#" disabled>JSON</a>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" disabled>JSON</button>
+                                    </td>
                                     % endif
                                     % if stream['process']:
-                                    <td>${stream['process']['data_location']}
-                                        % else:
+                                    <td>${stream['process']['data_location']}</td>
+                                    % else:
                                     <td>N/A</td>
                                     % endif
-                                    </td>
                                 </tr>
                                 % endfor
                             </tbody>
