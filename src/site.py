@@ -29,7 +29,8 @@ IGNORE_REPOS = [
     'stream_template',
     'status',
     'sync-data-stream-action',
-    'ooi-data.github.io'
+    'ooi-data.github.io',
+    'm2mpy'
 ]
 
 STATUS_CLASSES = {
