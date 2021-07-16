@@ -28,6 +28,8 @@ IGNORE_REPOS = [
     'PyGithub',
     'stream_template',
     'status',
+    'sync-data-stream-action',
+    'ooi-data.github.io'
 ]
 
 STATUS_CLASSES = {
